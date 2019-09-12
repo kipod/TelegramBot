@@ -1,0 +1,22 @@
+Common Git commands:
+git add
+git rm
+git status
+git commit
+git checkout
+git reset
+git push 
+git fetch
+git pull
+git log ---> git lg
+git remote -v
+gti branch
+git co -b
+
+git config --global --edit
+git remote add
+
+
+VI editor:
+TODO
+
