@@ -1,7 +1,9 @@
 from invoke import task
+from logger import log
 
 @task
 def start(_):
+    log(log.INFO, "starting...")
     pass
 
 
