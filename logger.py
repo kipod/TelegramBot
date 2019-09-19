@@ -1,7 +1,5 @@
 import logging
-import os
 import sys
-from datetime import datetime
 
 LOGGER_NAME = 'TelegramBot'
 
@@ -12,9 +10,7 @@ class Logger(object):
     CRITICAL = 50
     ERROR = 40
     WARNING = 30
-    TEXT = 25
     INFO = 20
-    TRACE = 15
     DEBUG = 10
     NOTSET = 0
 
@@ -27,13 +23,9 @@ class Logger(object):
         ch.setFormatter(formatter)
         self._log.addHandler(ch)
 
-        logging.addLevelName(self.TRACE, "TRACE")
-
         self._log.setLevel(self.INFO)
         self._methods_map = {
             self.DEBUG: self._log.debug,
-            self.TRACE: self._log.info,
-            self.TEXT: self._log.info,
             self.INFO: self._log.info,
             self.WARNING: self._log.warning,
             self.ERROR: self._log.error,

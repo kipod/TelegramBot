@@ -1,2 +1,3 @@
+telebot
 pytelegrambotapi>=3.6.6
 invoke

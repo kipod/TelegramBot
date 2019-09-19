@@ -1,6 +1,8 @@
 import os
+
 import telebot
-from telebot import types
+
+from logger import log
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -11,6 +13,7 @@ age = 0
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
+    log(log.INFO, 'get_text_messages %s', message)
     if message.text == "Привет":
         bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
     elif message.text == "/help":
@@ -24,6 +27,7 @@ def get_text_messages(message):
 
 
 def get_name(message):
+    log(log.INFO, 'get_name %s', message)
     global name
     name = message.text
     bot.send_message(message.from_user.id, 'Какая у тебя фамилия?')
@@ -31,6 +35,7 @@ def get_name(message):
 
 
 def get_surname(message):
+    log(log.INFO, 'get_surname %s', message)
     global surname
     surname = message.text
     bot.send_message(message.from_user.id, 'Сколько тебе лет?')
@@ -38,16 +43,17 @@ def get_surname(message):
 
 
 def get_age(message):
+    log(log.INFO, 'get_age %s', message)
     global age
     while age == 0:
         try:
             age = int(message.text)
-        except Exception:
+        except ValueError:
             bot.send_message(message.from_user.id, 'Цифрами, пожалуйста')
-        keyboard = types.InlineKeyboardMarkup()
-        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes')
+        keyboard = telebot.types.InlineKeyboardMarkup()
+        key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='yes')
         keyboard.add(key_yes)
-        key_no = types.InlineKeyboardButton(text='Нет', callback_data='no')
+        key_no = telebot.types.InlineKeyboardButton(text='Нет', callback_data='no')
         keyboard.add(key_no)
         question = 'Тебе '+str(age)+' лет, тебя зовут '+name+' '+surname+'?'
         bot.send_message(message.from_user.id, text=question, reply_markup=keyboard)

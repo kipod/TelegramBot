@@ -1,6 +1,9 @@
 from invoke import task
 from logger import log
 
+log.set_level(log.DEBUG)
+
+
 @task
 def start(_):
     log(log.INFO, "starting...")
@@ -9,9 +12,9 @@ def start(_):
 
 @task
 def status(_):
-    pass
+    log(log.DEBUG, "get status")
 
 
 @task
 def stop(_):
-    pass
+    log(log.INFO, "stopping...")
