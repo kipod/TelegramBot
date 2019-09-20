@@ -19,4 +19,4 @@ then
     pip install -r requirements.txt
 fi
 echo run:
-source $ACTIVE_SCRIPT
+echo source $ACTIVE_SCRIPT
