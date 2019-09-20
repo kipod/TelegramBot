@@ -1,0 +1,22 @@
+#!/bin/bash
+echo "init virtual env"
+ENV_DIR=venv
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+ACTIVE_SCRIPT=${DIR}/${ENV_DIR}/bin/activate
+echo current dir: $DIR
+if [[ ! -e $ACTIVE_SCRIPT ]]
+then
+    echo create virtual environment directory
+    cd $DIR
+    python3 -m venv $ENV_DIR
+    echo '#=============BOT=ENV=VARS=================='>> $ACTIVE_SCRIPT
+    echo 'export BOT_TOKEN="PLESE SET VALID VALUE"'>> $ACTIVE_SCRIPT
+    echo '#==========================================='>> $ACTIVE_SCRIPT
+    source $ACTIVE_SCRIPT
+    echo upgrade pip...
+    python -m pip install --upgrade pip
+    echo install requirements
+    pip install -r requirements.txt
+fi
+echo run:
+source $ACTIVE_SCRIPT
