@@ -68,4 +68,14 @@ def callback_worker(call):
         ...
 
 
-bot.polling(none_stop=True, interval=0)
+def main():
+    with open('PID', 'w') as file:
+        file.write(str(os.getpid()))
+    try:
+        bot.polling(none_stop=True, interval=0)
+    finally:
+        os.remove('PID')
+
+
+if __name__ == '__main__':
+    main()
