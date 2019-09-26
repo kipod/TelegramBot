@@ -12,7 +12,7 @@ def start(_):
         log(log.INFO, "already started")
         return
     log(log.INFO, "starting...")
-    subprocess.call(['python', 'bot.py'])
+    subprocess.Popen('start python bot.py', shell=True)
     pass
 
 

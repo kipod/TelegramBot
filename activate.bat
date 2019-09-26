@@ -17,5 +17,6 @@ if not exist "%~dp0%ENV_DIR%" (
   echo !!! please manually add env vars into %~dp0.venv\Scripts\activate.bat !!!
 ) else (
   call %ACTIVE_SCRIPT%
+  pip install -r requirements.txt
 )
 start "VEnv" cmd
