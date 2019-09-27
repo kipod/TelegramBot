@@ -5,7 +5,7 @@ SET ACTIVE_SCRIPT="%~dp0%ENV_DIR%\Scripts\activate.bat"
 if not exist "%~dp0%ENV_DIR%" (
   echo init virtual env...
   pushd "%~dp0"
-  python -m venv %ENV_DIR%
+  python -m virtualenv %ENV_DIR%
   echo ::=============BOT=ENV=VARS==================>> %ACTIVE_SCRIPT%
   echo SET BOT_TOKEN="PLEASE SET VALID VALUE">> %ACTIVE_SCRIPT%
   echo ::===========================================>> %ACTIVE_SCRIPT%
