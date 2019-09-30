@@ -1,4 +1,5 @@
-import psutil as ps
+import psutil
+import subprocess
 from invoke import task
 from logger import log
 
@@ -11,15 +12,17 @@ def start(_):
         log(log.INFO, "already started")
         return
     log(log.INFO, "starting...")
+    subprocess.Popen('start python bot.py', shell=True)
     pass
 
 
 def is_running() -> bool:
-    with open('PID', 'r') as file:
-        pid = int(file.readline())
-        return ps.pid_exists(pid)
-    # noinspection PyUnreachableCode
-    return False
+    try:
+        with open('PID', 'r') as file:
+            pid = int(file.readline())
+            return psutil.pid_exists(pid)
+    except FileNotFoundError:
+        return False
 
 
 @task
