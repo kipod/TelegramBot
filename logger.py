@@ -15,34 +15,34 @@ class Logger(object):
     NOTSET = 0
 
     def __init__(self):
-        self._log = logging.getLogger(LOGGER_NAME)
+        self.__log = logging.getLogger(LOGGER_NAME)
         # create formatter
         formatter = logging.Formatter('%(asctime)-15s [%(levelname)-8s] %(message)s')
         ch = logging.StreamHandler(sys.stderr)
         ch.setLevel(logging.DEBUG)
         ch.setFormatter(formatter)
-        self._log.addHandler(ch)
+        self.__log.addHandler(ch)
 
-        self._log.setLevel(self.INFO)
+        self.__log.setLevel(self.INFO)
         self._methods_map = {
-            self.DEBUG: self._log.debug,
-            self.INFO: self._log.info,
-            self.WARNING: self._log.warning,
-            self.ERROR: self._log.error,
-            self.CRITICAL: self._log.critical,
-            self.EXCEPTION: self._log.exception,
+            self.DEBUG: self.__log.debug,
+            self.INFO: self.__log.info,
+            self.WARNING: self.__log.warning,
+            self.ERROR: self.__log.error,
+            self.CRITICAL: self.__log.critical,
+            self.EXCEPTION: self.__log.exception,
         }
 
     def __call__(self, lvl, msg, *args, **kwargs):
         if lvl in self._methods_map:
             self._methods_map[lvl](msg, *args, **kwargs)
         else:
-            self._log.log(lvl, msg, *args, **kwargs)
+            self.__log.log(lvl, msg, *args, **kwargs)
 
     def set_level(self, level=None):
         if level is None:
             level = self.INFO
-        self._log.setLevel(level)
+        self.__log.setLevel(level)
 
 
 log = Logger()

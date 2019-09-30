@@ -15,7 +15,7 @@ def fun1(a):
 
 def main():
     try:
-        res = fun1(7)
+        res = fun1(8)
         if res:
             pass
         print("OK")
