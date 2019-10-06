@@ -1,7 +1,10 @@
+import os
 import psutil
 import subprocess
 import signal
+import json
 from logger import log
+from bot.config import CONFIG_FILE_NAME
 
 
 def start():
@@ -45,3 +48,22 @@ def stop():
             p.terminate()
     else:
         print("The process was not started")
+
+
+def gen_config():
+    if os.path.exists(CONFIG_FILE_NAME):
+        log(log.WARNING, 'The file "%s" already exists', CONFIG_FILE_NAME)
+        return False
+    BOT_TOKEN = None
+    if 'BOT_TOKEN' in os.environ:
+        BOT_TOKEN = os.environ['BOT_TOKEN']
+    BOT_MGR_TOKEN = None
+    if 'BOT_MGR_TOKEN' in os.environ:
+        BOT_MGR_TOKEN = os.environ['BOT_MGR_TOKEN']
+    conf = {
+        'bot_token': BOT_TOKEN,
+        'bot_manager_token': BOT_MGR_TOKEN
+    }
+    with open(CONFIG_FILE_NAME, 'w') as file:
+        json.dump(conf, file, indent=2)
+    return os.path.exists(CONFIG_FILE_NAME)
