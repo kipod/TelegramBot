@@ -4,4 +4,5 @@
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "pythonTestExplorer.testFramework": "pytest",
+    "python.envFile": "venv/Scripts/activate.bat"
 }

@@ -1,4 +1,3 @@
-import pytest  # noqa: F401
 import os
 from tasks.bot_control import gen_config
 from bot.config import Configuration, CONFIG_FILE_NAME
