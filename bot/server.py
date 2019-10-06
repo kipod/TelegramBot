@@ -26,30 +26,37 @@ class Server:
         def _on_edited_message(message):
             self.handler[message.content_type].edited_message(message)
 
+        # noinspection PyUnusedLocal
         @self.bot.channel_post_handler(content_types=['text', 'photo'])
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>channel_post<<<')
 
+        # noinspection PyUnusedLocal
         @self.bot.edited_channel_post_handler(content_types=['text', 'photo'])
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>edited_channel_post<<<')
 
+        # noinspection PyUnusedLocal
         @self.bot.inline_handler
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>inline<<<')
 
+        # noinspection PyUnusedLocal
         @self.bot.chosen_inline_handler
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>chosen_inline<<<')
 
+        # noinspection PyUnusedLocal
         @self.bot.callback_query_handler
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>callback_query<<<')
 
+        # noinspection PyUnusedLocal
         @self.bot.shipping_query_handler
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>shipping_query<<<')
 
+        # noinspection PyUnusedLocal
         @self.bot.pre_checkout_query_handler
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>pre_checkout_query<<<')
