@@ -28,31 +28,31 @@ class Server:
 
         @self.bot.channel_post_handler(content_types=['text', 'photo'])
         def __handler(*args, **kwargs):
-            pass
+            log(log.WARNING, '>>>channel_post<<<')
 
         @self.bot.edited_channel_post_handler(content_types=['text', 'photo'])
         def __handler(*args, **kwargs):
-            pass
+            log(log.WARNING, '>>>edited_channel_post<<<')
 
         @self.bot.inline_handler
         def __handler(*args, **kwargs):
-            pass
+            log(log.WARNING, '>>>inline<<<')
 
         @self.bot.chosen_inline_handler
         def __handler(*args, **kwargs):
-            pass
+            log(log.WARNING, '>>>chosen_inline<<<')
 
         @self.bot.callback_query_handler
         def __handler(*args, **kwargs):
-            pass
+            log(log.WARNING, '>>>callback_query<<<')
 
         @self.bot.shipping_query_handler
         def __handler(*args, **kwargs):
-            pass
+            log(log.WARNING, '>>>shipping_query<<<')
 
         @self.bot.pre_checkout_query_handler
         def __handler(*args, **kwargs):
-            pass
+            log(log.WARNING, '>>>pre_checkout_query<<<')
 
     def run(self):
         log(log.INFO, 'starting bot server... ')
