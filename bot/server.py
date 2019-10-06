@@ -1,17 +1,11 @@
-import os
-from builtins import getattr
-
 import telebot
-
+from bot.config import CONFIG
 from .parser import Text, Photo
 from logger import log
 
-BOT_TOKEN = os.environ['BOT_TOKEN']
-
-
 class Server:
     def __init__(self):
-        self.bot = telebot.TeleBot(BOT_TOKEN)
+        self.bot = telebot.TeleBot(CONFIG.bot_token)
         self.handler = {
             'text': Text(self.bot),
             'photo': Photo(self.bot)
