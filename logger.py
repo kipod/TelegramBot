@@ -2,7 +2,7 @@ import logging
 import sys
 
 LOGGER_NAME = 'TelegramBot'
-
+#make different
 class Logger(object):
     # __created_std_out = False
     EXCEPTION = 100
