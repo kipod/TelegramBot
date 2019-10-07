@@ -2,7 +2,6 @@ import logging
 import sys
 
 LOGGER_NAME = 'TelegramBot'
-# comment 
 
 class Logger(object):
     # __created_std_out = False
