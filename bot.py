@@ -2,6 +2,7 @@ import os
 from bot import Server
 
 
+# main function
 def main():
 
     with open('PID', 'w') as file:
@@ -13,5 +14,6 @@ def main():
         os.remove('PID')
 
 
+# name main
 if __name__ == '__main__':
     main()
