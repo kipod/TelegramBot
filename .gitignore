@@ -4,3 +4,4 @@
 __pycache__/
 /bot.conf
 /.vscode/
+/db/
