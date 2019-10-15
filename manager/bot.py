@@ -4,6 +4,7 @@ import subprocess
 import signal
 from logger import log
 from bot.config import CONFIG
+import tasks.bot_control as bot_control
 
 log.set_level(log.DEBUG)
 
@@ -23,11 +24,11 @@ class Bot(object):
             if message.text in message_map:
                 message_map[message.text](message)
             else:
-                # TODO
+                self.bot.send_message(message.from_user.id, "Unknown command")
                 pass
 
     def start(self, message):
-        if self.is_running():
+        if bot_control.is_running():
             self.bot.send_message(message.from_user.id, "Bot already started")
             log(log.INFO, 'get_text_messages %s', message.text)
             return
@@ -36,7 +37,7 @@ class Bot(object):
         # TODO write output from bot
 
     def status(self, message):
-        if Bot.is_running():
+        if bot_control.is_running():
             self.bot.send_message(message.from_user.id, "Running")
             return
         self.bot.send_message(message.from_user.id, "Stopped")
@@ -47,9 +48,9 @@ class Bot(object):
 
     def stop(self, message):
         # TODO by invoke
-        if Bot.is_running():
+        if bot_control.is_running():
             self.bot.send_message(message.from_user.id, "Process was started")
-            pid = Bot.get_pid()
+            pid = bot_control.get_pid()
             p = psutil.Process(pid)
             self.bot.send_message(message.from_user.id, "Stopping...")
             try:
@@ -63,16 +64,21 @@ class Bot(object):
         else:
             self.bot.send_message(message.from_user.id, "The process was not started")
 
-    @staticmethod
-    def get_pid():
-        # TODO
-        with open('PID', 'r') as file:
-            return int(file.readline())
 
-    @staticmethod
-    def is_running() -> bool:
-        # TODO
-        try:
-            return psutil.pid_exists(Bot.get_pid())
-        except FileNotFoundError:
-            return False
+if __name__ == '__main__':
+    bot = Bot()
+    bot.run()
+
+    # @staticmethod
+    # def get_pid():
+    #     # TODO
+    #     with open('PID', 'r') as file:
+    #         return int(file.readline())
+    #
+    # @staticmethod
+    # def is_running() -> bool:
+    #     # TODO
+    #     try:
+    #         return psutil.pid_exists(Bot.get_pid())
+    #     except FileNotFoundError:
+    #         return False
