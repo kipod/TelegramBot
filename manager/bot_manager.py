@@ -9,7 +9,7 @@ import tasks.bot_control as bot_control
 log.set_level(log.DEBUG)
 
 
-class Bot(object):
+class BotManager(object):
 
     def __init__(self):
         message_map = {
@@ -33,14 +33,19 @@ class Bot(object):
             log(log.INFO, 'get_text_messages %s', message.text)
             return
         self.bot.send_message(message.from_user.id, "Starting dJg.Test.Bot...")
-        subprocess.Popen('start python bot.py', shell=True)  # TODO inv start
+        subprocess.Popen('invoke start', shell=True)
+        # process = subprocess.Popen('invoke start', shell=True,
+        #                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.DEVNULL)
         # TODO write output from bot
+        # try:
+        #     outputs, errors = process.communicate(timeout=5)
+        # except subprocess.TimeoutExpired:
+        #     process.kill()
+        #     outputs, errors = process.communicate()
+        # pass
 
     def status(self, message):
-        if bot_control.is_running():
-            self.bot.send_message(message.from_user.id, "Running")
-            return
-        self.bot.send_message(message.from_user.id, "Stopped")
+        self.bot.send_message(message.from_user.id, "Running" if bot_control.is_running() else "Stopped")
 
     def run(self):
         log(log.INFO, 'starting... ')
@@ -66,19 +71,5 @@ class Bot(object):
 
 
 if __name__ == '__main__':
-    bot = Bot()
+    bot = BotManager()
     bot.run()
-
-    # @staticmethod
-    # def get_pid():
-    #     # TODO
-    #     with open('PID', 'r') as file:
-    #         return int(file.readline())
-    #
-    # @staticmethod
-    # def is_running() -> bool:
-    #     # TODO
-    #     try:
-    #         return psutil.pid_exists(Bot.get_pid())
-    #     except FileNotFoundError:
-    #         return False
