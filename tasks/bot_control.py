@@ -11,7 +11,7 @@ def start():
     if is_running():
         log(log.INFO, "already started")
         return
-    log(log.INFO, "starting...")
+    # log(log.INFO, "starting...")
     subprocess.Popen('start python bot.py', shell=True)
 
 
@@ -28,7 +28,6 @@ def is_running() -> bool:
 
 
 def status():
-    log(log.DEBUG, "get status")
     log(log.INFO, 'running' if is_running() else 'stopped')
 
 
@@ -47,7 +46,7 @@ def stop():
             log(log.INFO, "terminate...")
             p.terminate()
     else:
-        print("The process was not started")
+        log(log.INFO, "The process was not started" )
 
 
 def start_manager():

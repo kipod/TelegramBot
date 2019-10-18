@@ -2,7 +2,7 @@ from invoke import task
 import tasks.bot_control as bot_control
 from logger import log
 
-log.set_level(log.DEBUG)
+log.set_level(log.INFO)
 
 
 @task
