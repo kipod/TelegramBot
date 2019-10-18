@@ -50,6 +50,49 @@ def stop():
         print("The process was not started")
 
 
+def start_manager():
+    if mng_is_running():
+        log(log.INFO, "already started")
+        return
+    log(log.INFO, "starting...")
+    subprocess.Popen('start python manager_bot.py', shell=True)
+
+
+def get_mng_pid():
+    with open('MNG_PID', 'r') as file:
+        return int(file.readline())
+
+
+def mng_is_running() -> bool:
+    try:
+        return psutil.pid_exists(get_mng_pid())
+    except FileNotFoundError:
+        return False
+
+
+def status_manager():
+    log(log.DEBUG, "get status")
+    log(log.INFO, 'running' if mng_is_running() else 'stopped')
+
+
+def stop_manager():
+    if mng_is_running():
+        log(log.INFO, "Process was starting...")
+        mng_pid = get_mng_pid()
+        pm = psutil.Process(mng_pid)
+        log(log.INFO, "stopping...")
+        try:
+            pm.send_signal(signal.CTRL_C_EVENT)
+        except SystemError:
+            pass
+        _, alive = psutil.wait_procs([pm], timeout=2)
+        for pm in alive:
+            log(log.INFO, "terminate...")
+            pm.terminate()
+    else:
+        print("The process was not started")
+
+
 def gen_config():
     if os.path.exists(CONFIG_FILE_NAME):
         log(log.WARNING, 'The file "%s" already exists', CONFIG_FILE_NAME)

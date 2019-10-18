@@ -68,8 +68,3 @@ class BotManager(object):
                 p.terminate()
         else:
             self.bot.send_message(message.from_user.id, "The process was not started")
-
-
-if __name__ == '__main__':
-    bot = BotManager()
-    bot.run()

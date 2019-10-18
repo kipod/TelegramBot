@@ -21,5 +21,20 @@ def stop(_):
 
 
 @task
+def start_manager(_):
+    bot_control.start_manager()
+
+
+@task
+def status_manager(_):
+    bot_control.status_manager()
+
+
+@task
+def stop_manager(_):
+    bot_control.stop_manager()
+
+
+@task
 def gen_config(_):
     bot_control.gen_config()
