@@ -3,5 +3,6 @@
 /PID
 /MNG_PID
 __pycache__/
+/db/
 /bot.conf
 /.vscode/
