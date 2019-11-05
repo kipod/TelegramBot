@@ -1,5 +1,5 @@
 import os
-from bot import Server
+from bot.server import Server
 
 
 def main():
