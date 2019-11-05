@@ -33,7 +33,7 @@ def status():
 
 def stop():
     if is_running():
-        log(log.INFO, "Process was starting...")
+        log(log.INFO, "process was started")
         pid = get_pid()
         p = psutil.Process(pid)
         log(log.INFO, "stopping...")
@@ -51,9 +51,9 @@ def stop():
 
 def start_manager():
     if mng_is_running():
-        log(log.INFO, "already started")
+        log(log.INFO, "already started bot manager")
         return
-    log(log.INFO, "starting...")
+    log(log.INFO, "starting bot manager")
     subprocess.Popen('start python manager_bot.py', shell=True)
 
 
@@ -71,15 +71,15 @@ def mng_is_running() -> bool:
 
 def status_manager():
     log(log.DEBUG, "get status")
-    log(log.INFO, 'running' if mng_is_running() else 'stopped')
+    log(log.INFO, 'running bot manager' if mng_is_running() else 'stopped bot manager')
 
 
 def stop_manager():
     if mng_is_running():
-        log(log.INFO, "Process was starting...")
+        log(log.INFO, "process was started")
         mng_pid = get_mng_pid()
         pm = psutil.Process(mng_pid)
-        log(log.INFO, "stopping...")
+        log(log.INFO, "stopping bot manager")
         try:
             pm.send_signal(signal.CTRL_C_EVENT)
         except SystemError:
