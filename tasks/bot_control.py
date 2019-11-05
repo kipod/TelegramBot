@@ -11,7 +11,7 @@ def start():
     if is_running():
         log(log.INFO, "already started")
         return
-    log(log.INFO, "starting...")
+    # log(log.INFO, "starting...")
     subprocess.Popen('start python bot.py', shell=True)
 
 
@@ -28,13 +28,12 @@ def is_running() -> bool:
 
 
 def status():
-    log(log.DEBUG, "get status")
     log(log.INFO, 'running' if is_running() else 'stopped')
 
 
 def stop():
     if is_running():
-        log(log.INFO, "Process was starting...")
+        log(log.INFO, "process was started")
         pid = get_pid()
         p = psutil.Process(pid)
         log(log.INFO, "stopping...")
@@ -46,6 +45,49 @@ def stop():
         for p in alive:
             log(log.INFO, "terminate...")
             p.terminate()
+    else:
+        log(log.INFO, "The process was not started" )
+
+
+def start_manager():
+    if mng_is_running():
+        log(log.INFO, "already started bot manager")
+        return
+    log(log.INFO, "starting bot manager")
+    subprocess.Popen('start python manager_bot.py', shell=True)
+
+
+def get_mng_pid():
+    with open('MNG_PID', 'r') as file:
+        return int(file.readline())
+
+
+def mng_is_running() -> bool:
+    try:
+        return psutil.pid_exists(get_mng_pid())
+    except FileNotFoundError:
+        return False
+
+
+def status_manager():
+    log(log.DEBUG, "get status")
+    log(log.INFO, 'running bot manager' if mng_is_running() else 'stopped bot manager')
+
+
+def stop_manager():
+    if mng_is_running():
+        log(log.INFO, "process was started")
+        mng_pid = get_mng_pid()
+        pm = psutil.Process(mng_pid)
+        log(log.INFO, "stopping bot manager")
+        try:
+            pm.send_signal(signal.CTRL_C_EVENT)
+        except SystemError:
+            pass
+        _, alive = psutil.wait_procs([pm], timeout=2)
+        for pm in alive:
+            log(log.INFO, "terminate...")
+            pm.terminate()
     else:
         print("The process was not started")
 

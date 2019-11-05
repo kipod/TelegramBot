@@ -2,7 +2,7 @@ from invoke import task
 import tasks.bot_control as bot_control
 from logger import log
 
-log.set_level(log.DEBUG)
+log.set_level(log.INFO)
 
 
 @task
@@ -18,6 +18,21 @@ def status(_):
 @task
 def stop(_):
     bot_control.stop()
+
+
+@task
+def start_manager(_):
+    bot_control.start_manager()
+
+
+@task
+def status_manager(_):
+    bot_control.status_manager()
+
+
+@task
+def stop_manager(_):
+    bot_control.stop_manager()
 
 
 @task
