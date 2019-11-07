@@ -3,6 +3,7 @@ from bot.config import CONFIG
 from .parser import Text, Photo
 from logger import log
 
+
 class Server:
     def __init__(self):
         self.bot = telebot.TeleBot(CONFIG.bot_token)
