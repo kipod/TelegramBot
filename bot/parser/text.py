@@ -8,3 +8,5 @@ class Text(Message):
         @self.bot.callback_query_handler(func=lambda call: True)
         def _callback_worker(call):
             self.callback(call)
+
+    # TODO: add users update logic

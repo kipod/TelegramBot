@@ -62,4 +62,3 @@ class Message(object):
 
     def edited_message(self, message):
         log(log.INFO, 'edited message id:%d', message.message_id)
-
