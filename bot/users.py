@@ -7,7 +7,6 @@ class Users(object):
 
     def __init__(self):
         self.users = {}
-        self.__save()
         self.__load()
 
     def __getitem__(self, key):
