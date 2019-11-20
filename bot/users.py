@@ -11,7 +11,7 @@ class Users(object):
 
     def __getitem__(self, key):
         if isinstance(key, int):
-            pass
+            return self.users.get(self, key)
         else:
             return None
 

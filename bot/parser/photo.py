@@ -12,7 +12,7 @@ class Photo(Message):
 
     def message(self, message):
         assert isinstance(message.photo, list)
-        self.check_user(message.from_user)
+        self.__check_user(message.from_user)
         photo = message.photo[-1]
         user_id = message.from_user.id
         file_id = photo.file_id
@@ -28,7 +28,7 @@ class Photo(Message):
                                                                       photo.width, photo.file_size // 1024))
 
     @staticmethod
-    def check_user(user):
+    def __check_user(user):
         u = users[user.id]
         if not u:
             users.add_user(uid=user.id, name=user.first_name, surname=user.last_name, username=user.username)

@@ -1,7 +1,7 @@
 from .message import Message
 import telebot
 from logger import log
-from bot.parser.photo import Photo
+from bot.users import users
 
 
 class Text(Message):
@@ -14,7 +14,7 @@ class Text(Message):
 
     def message(self, message):
         assert isinstance(message.text, str)
-        Photo.check_user(message.from_user)
+        self.__check_user(message.from_user)
         log(log.INFO, 'get_text_messages %s', message.text)
         if message.text == "Привет":
             self.bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
@@ -68,3 +68,9 @@ class Text(Message):
 
     def edited_message(self, message):
         log(log.INFO, 'edited message id:%d', message.message_id)
+
+    @staticmethod
+    def __check_user(user):
+        u = users[user.id]
+        if not u:
+            users.add_user(uid=user.id, name=user.first_name, surname=user.last_name, username=user.username)
