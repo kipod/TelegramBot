@@ -23,7 +23,7 @@ class Logger(object):
         ch.setFormatter(formatter)
         self.__log.addHandler(ch)
 
-        self.__log.setLevel(self.INFO)
+        self.__log.setLevel(self.DEBUG)
         self._methods_map = {
             self.DEBUG: self.__log.debug,
             self.INFO: self.__log.info,
