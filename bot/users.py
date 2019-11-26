@@ -13,7 +13,7 @@ class Users(JsonDb):
         self.users = self.load()
 
     def __getitem__(self, key):
-        if isinstance(key, int):
+        if isinstance(key, str):
             data = self.users[key]
             if data:
                 return User(key, data)
