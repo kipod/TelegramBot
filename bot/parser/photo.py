@@ -16,10 +16,10 @@ class Photo(Message):
         photo = message.photo[-1]
         user_id = message.from_user.id
         file_id = photo.file_id
-        if self.__check_file(photo, user_id):
+        file = self.bot.get_file(file_id)
+        if self.__check_file(file, user_id):
             self.bot.send_message(message.from_user.id, 'This file already exists')
             return
-        file = self.bot.get_file(file_id)
         full_file_path = os.path.join(DB_DIR, str(user_id), file.file_path)
         log(log.DEBUG, 'save photo to %s', full_file_path)
         os.makedirs(os.path.dirname(full_file_path), exist_ok=True)
@@ -37,10 +37,10 @@ class Photo(Message):
 
     @staticmethod
     def __check_file(file, uid):
-        user = users[uid]
+        user = users[str(uid)]
         user_file = user.get_file_by_id(file.file_id)
         if not user_file:
-            user.add_file(file_id=file.file_id, content_type='photo')
+            user.add_file(file_id=file.file_id, content_type='photo', file_path=file.file_path)
             return False
         else:
             return True
