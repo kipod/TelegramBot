@@ -1,34 +1,30 @@
 from os import path
-import json
+
+from .consts import DB_DIR
+from .json_db import JsonDb
+from .user import User
 
 
-class Users(object):
-    USERS_DB_FILE = path.join('db', 'users.json')
+class Users(JsonDb):
+    USERS_DB_FILE = path.join(DB_DIR, 'users.json')
 
     def __init__(self):
-        self.users = {}
-        self.__load()
+        super().__init__(self.USERS_DB_FILE)
+        self.users = self.load()
 
     def __getitem__(self, key):
         if isinstance(key, int):
-            return self.users.get(self, key)
-        else:
-            return None
-
-    def __load(self):
-        with open(self.USERS_DB_FILE, 'r') as f:
-            self.users = json.load(f)
-
-    def __save(self):
-        with open(self.USERS_DB_FILE, 'w') as f:
-            f.write(json.dumps(self.users, indent=4))
+            data = self.users[key]
+            if data:
+                return User(key, data)
+        return None
 
     def add_user(self, uid, **kwargs):
         user = {}
         self.users[uid] = user
         for key in kwargs:
             user[key] = kwargs[key]
-        self.__save()
+        self.save(self.users)
 
 
 users = Users()

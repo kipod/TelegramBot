@@ -71,6 +71,6 @@ class Text(Message):
 
     @staticmethod
     def __check_user(user):
-        u = users[user.id]
+        u = users[str(user.id)]
         if not u:
             users.add_user(uid=user.id, name=user.first_name, surname=user.last_name, username=user.username)
