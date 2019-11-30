@@ -1,5 +1,5 @@
 @echo off
-set ENV_DIR=venv
+set ENV_DIR=.venv
 SET ACTIVE_SCRIPT="%~dp0%ENV_DIR%\Scripts\activate.bat"
 
 if not exist "%~dp0%ENV_DIR%" (
