@@ -1,6 +1,6 @@
 import telebot
 from bot.config import CONFIG
-from .parser import Text, Photo
+from bot.parser import Text, Photo, Document
 from logger import log
 
 
@@ -9,25 +9,26 @@ class Server:
         self.bot = telebot.TeleBot(CONFIG.bot_token)
         self.handler = {
             'text': Text(self.bot),
-            'photo': Photo(self.bot)
+            'photo': Photo(self.bot),
+            'document': Document(self.bot)
         }
 
-        @self.bot.message_handler(content_types=['text', 'photo'])
+        @self.bot.message_handler(content_types=['text', 'photo', 'document'])
         def _get_text_messages(message):
             log(log.INFO, "received [%s]", message.content_type)
             self.handler[message.content_type].message(message)
 
-        @self.bot.edited_message_handler(content_types=['text', 'photo'])
+        @self.bot.edited_message_handler(content_types=['text', 'photo', 'document'])
         def _on_edited_message(message):
             self.handler[message.content_type].edited_message(message)
 
         # noinspection PyUnusedLocal
-        @self.bot.channel_post_handler(content_types=['text', 'photo'])
+        @self.bot.channel_post_handler(content_types=['text', 'photo', 'document'])
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>channel_post<<<')
 
         # noinspection PyUnusedLocal
-        @self.bot.edited_channel_post_handler(content_types=['text', 'photo'])
+        @self.bot.edited_channel_post_handler(content_types=['text', 'photo', 'document'])
         def __handler(*args, **kwargs):
             log(log.WARNING, '>>>edited_channel_post<<<')
 
