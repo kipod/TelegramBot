@@ -13,18 +13,26 @@ class Users(JsonDb):
         self.users = self.load()
 
     def __getitem__(self, key):
-        if isinstance(key, str):
-            data = self.users[key]
-            if data:
-                return User(key, data)
+        user_id = str(key)
+        data = self.users[user_id]
+        if data:
+            return User(user_id, data)
         return None
 
-    def add_user(self, uid, **kwargs):
+    def __add_user(self, uid, **kwargs):
         user = {}
         self.users[uid] = user
         for key in kwargs:
             user[key] = kwargs[key]
         self.save(self.users)
+
+    def get_user(self, user):
+        usr = self[str(user.id)]
+        if not usr:
+            self.__add_user(uid=user.id, name=user.first_name, surname=user.last_name, username=user.username)
+            usr = self[str(user.id)]
+            assert usr
+        return usr
 
 
 users = Users()
