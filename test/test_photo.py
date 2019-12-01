@@ -5,6 +5,7 @@ TEST_USER_ID = 56
 class MockBot(object):
     class File:
         file_id = 0
+        file_size = 12
 
     def send_message(self, *args, **kwargs):
         pass
@@ -16,13 +17,14 @@ class MockBot(object):
 
 class MockUser(object):
     def __init__(self):
-        pass
+        self.file_db = {0: 12,
+                        19: 2}
 
     def download_file(self, *args, **kwargs):
         pass
 
-    def check_file(self, *args, **kwargs):
-        pass
+    def check_file(self, key):
+        test_file_already_exists(self.file_db.get(key))
 
 
 class MockUsers(object):
@@ -57,7 +59,11 @@ class MockMessage(object):
         self.content_type = "photo"
 
 
-def test_photo_message(monkeypatch):
+def test_photo_message():
     photo = Photo(bot=MockBot(), _users=MockUsers())
     message = MockMessage()
     photo.message(message)
+
+
+def test_file_already_exists(file_id=int):
+    return True if file_id else False
