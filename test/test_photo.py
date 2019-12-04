@@ -16,15 +16,13 @@ class MockBot(object):
 
 
 class MockUser(object):
-    def __init__(self):
-        self.file_db = {0: 12,
-                        19: 2}
+    check_file_return_value = False
 
     def download_file(self, *args, **kwargs):
         pass
 
     def check_file(self, key):
-        test_file_already_exists(self.file_db.get(key))
+        return self.check_file_return_value
 
 
 class MockUsers(object):
@@ -62,8 +60,12 @@ class MockMessage(object):
 def test_photo_message():
     photo = Photo(bot=MockBot(), _users=MockUsers())
     message = MockMessage()
+    MockUser.check_file_return_value = False
     photo.message(message)
 
 
-def test_file_already_exists(file_id=int):
-    return True if file_id else False
+def test_file_already_exists():
+    photo = Photo(bot=MockBot(), _users=MockUsers())
+    message = MockMessage()
+    MockUser.check_file_return_value = True
+    photo.message(message)
