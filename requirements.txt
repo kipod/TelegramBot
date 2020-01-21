@@ -4,3 +4,9 @@ invoke
 psutil
 flake8
 pytest
+GPSPhoto
+Pillow
+piexif
+exifread
+geographiclib
+geopy
