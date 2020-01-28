@@ -6,6 +6,7 @@ class MockBot(object):
     class File:
         file_id = 0
         file_size = 12
+        file_path = "EMPTY"
 
     def send_message(self, *args, **kwargs):
         pass
@@ -57,6 +58,19 @@ class MockMessage(object):
         self.content_type = "photo"
 
 
+class MockGPSTag(object):
+    class Coordinates:
+        latitude = None
+        longitude = None
+
+    @staticmethod
+    def get_gps_tag(*args, **kwargs):
+        return MockGPSTag.Coordinates()
+
+    def convert_to_address(self, *args, **kwargs):
+        pass
+
+
 def test_photo_message():
     photo = Photo(bot=MockBot(), _users=MockUsers())
     message = MockMessage()
@@ -69,3 +83,10 @@ def test_file_already_exists():
     message = MockMessage()
     MockUser.check_file_return_value = True
     photo.message(message)
+
+
+def test_getting_gps_tag():
+    photo = Photo(bot=MockBot(), _users=MockUsers(), _gps=MockGPSTag())
+    message = MockMessage()
+    MockUser.check_file_return_value = False
+    photo.get_coordinates(message)

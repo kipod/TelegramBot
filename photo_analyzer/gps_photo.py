@@ -2,13 +2,12 @@ from GPSPhoto import gpsphoto
 from geopy.geocoders import Nominatim
 from bot.consts import DB_DIR
 import os
-from bot.parser.photo import Photo
 
 
-class GPSTag(Photo):
+class GPSTag(object):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self):
+        self.geographic_locator = Nominatim(user_agent="Telegram")
 
     @staticmethod
     def get_gps_tag(usr, file_path):
@@ -16,10 +15,8 @@ class GPSTag(Photo):
         coordinates = gpsphoto.getGPSData(photo_path)
         return coordinates
 
-    @staticmethod
-    def convert_to_address(coordinates):
+    def convert_to_address(self, coordinates):
         latitude = coordinates.latitude
         longitude = coordinates.longitude
-        geographic_locator = Nominatim(user_agent="Telegram")
-        location = geographic_locator.reverse("{} , {}".format(latitude, longitude))
+        location = self.geographic_locator.reverse("{} , {}".format(latitude, longitude))
         return location.address

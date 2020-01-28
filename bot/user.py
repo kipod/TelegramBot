@@ -36,5 +36,6 @@ class User(JsonDb):
             f.write(bot.download_file(file.file_path))
         self.add_file(file_id=file_id, content_type=content_type, file_path=full_file_path)
 
+
     def check_file(self, file_id):
         return True if self.get_file_by_id(file_id) else False
