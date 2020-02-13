@@ -4,8 +4,8 @@ from photo_analyzer.gps_photo import GPSTag
 
 class Photo(Message):
 
-    def __init__(self, _gps=GPSTag, *args, **kwargs):
-        self.gps = _gps
+    def __init__(self, gps=GPSTag, *args, **kwargs):
+        self.__gps = gps
         super().__init__(*args, **kwargs)
 
     def message(self, message):
@@ -23,12 +23,12 @@ class Photo(Message):
 
     def get_coordinates(self, message):
         file = self.bot.get_file(message.photo[-1].file_id)
-        coordinates = self.gps.get_gps_tag(self.users.get_user(message.from_user), file.file_path)
+        coordinates = self.__gps.get_gps_tag(self.users.get_user(message.from_user), file.file_path)
         if coordinates.latitude is None or coordinates.longitude is None:
             self.bot.send_message(message.from_user.id, 'This photo has not got GPS tag')
             return
         try:
-            address = self.gps.convert_to_address(coordinates)
+            address = self.__gps.convert_to_address(coordinates)
             self.bot.send_message(message.from_user.id, 'This photo was taken by this address : {}'.format(address))
         except Exception:
             self.bot.send_message(message.from_user.id, 'Unable to take address from this photo')

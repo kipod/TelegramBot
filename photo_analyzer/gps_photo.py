@@ -1,7 +1,7 @@
+import os
 from GPSPhoto import gpsphoto
 from geopy.geocoders import Nominatim
 from bot.consts import DB_DIR
-import os
 
 
 class GPSTag(object):
